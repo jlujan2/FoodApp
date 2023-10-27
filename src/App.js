@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import SignIn from "./components/sign-in-form/sign-in-form.component";
+import {Routes, Route } from 'react-router-dom';
+import SignUp from "./components/sign-up-form/sign-up-form.component";
+import Home from "./routes/home/home.component";
+import Navigation
+ from "./routes/navigation/navigation.component";
+import { getCurrentUser } from "./utils/firebase/firebase.utils";
+import { useEffect } from "react";
 
-function App() {
+
+const App = () => {
+
+  useEffect(() => {
+    getCurrentUser().then((user) => console.log(user));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path='/' element={<Navigation/>}/>
+      <Route path='sign-in' element={<SignIn/>}/>
+      <Route path='sign-up' element={<SignUp/>}/>
+      <Route path='home' element={<Home/>}/>
+
+    </Routes>
   );
-}
+};
 
 export default App;
