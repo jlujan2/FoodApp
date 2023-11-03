@@ -6,12 +6,14 @@ import Navigation
  from "./routes/navigation/navigation.component";
 import { getCurrentUser } from "./utils/firebase/firebase.utils";
 import { useEffect } from "react";
-
+import { checkUserSession } from "./store/user/user.action";
+import { useDispatch } from "react-redux";
 
 const App = () => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getCurrentUser().then((user) => console.log(user));
+    dispatch(checkUserSession());
   }, []);
 
   return (

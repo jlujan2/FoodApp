@@ -29,9 +29,9 @@ export function* isUserAuthenticated() {
 }
 
 export function* onCheckUserSession() {
-    yield takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, )
+    yield takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, isUserAuthenticated)
 }
 
 export function* userSagas() {
-    yield all([])
+    yield all([onCheckUserSession])
 }
