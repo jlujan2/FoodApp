@@ -12,11 +12,16 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { selectCurrentUser } from '../../store/user/user.selector';
+import { useSelector } from 'react-redux';
+
 
 const pages = ['Recipes', 'Calendar', 'NutriFacts'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navigation() {
+  const currentUser = useSelector(selectCurrentUser);
+  console.log(currentUser);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -124,7 +129,14 @@ function Navigation() {
               </Button>
             ))}
           </Box>
-
+          <Box>
+            {currentUser ? (
+              <h1>User connected</h1>
+            ):
+            <h1>User not Connected</h1>
+            
+            }
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

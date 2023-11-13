@@ -18,6 +18,9 @@ import {
   signInWithGooglePopup,
   createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
   import GoogleButton from 'react-google-button'
+import { googleSignInStart } from '../../store/user/user.action';
+
+
 
 function Copyright(props) {
   return (
@@ -38,12 +41,19 @@ const defaultFormFields = {
 };
 
 const SignIn = () => {
-  // const dispatch = useDispatch();
-  // const [formFields, setFormFields] = useState(defaultFormFields);
+  const dispatch = useDispatch();
+  const [formFields, setFormFields] = useState(defaultFormFields);
   // const { email, password } = formFields;
+
+  const resetFormFields = () => {
+    setFormFields(defaultFormFields);
+  };
+
   const logGoogleUser = async () => {
     const {user} = await signInWithGooglePopup();
     const userDocRef = await createUserDocumentFromAuth(user);
+
+    dispatch(googleSignInStart());
   }
 
   const handleSubmit = (event) => {
