@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState } from "react";
 
 import Avatar from '@mui/material/Avatar';
@@ -14,10 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useDispatch } from 'react-redux';
-import { 
-  signInWithGooglePopup,
-  createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
-  import GoogleButton from 'react-google-button'
+import GoogleButton from 'react-google-button'
 import { googleSignInStart } from '../../store/user/user.action';
 
 
@@ -50,9 +46,9 @@ const SignIn = () => {
   };
 
   const logGoogleUser = async () => {
-    const {user} = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(user);
-
+    //const {user} = await signInWithGooglePopup();
+    //const userDocRef = await createUserDocumentFromAuth(user);
+    console.log("Login Google")
     dispatch(googleSignInStart());
   }
 

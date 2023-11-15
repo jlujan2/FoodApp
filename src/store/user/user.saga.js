@@ -50,8 +50,8 @@ export function* onGoogleSignInStart() {
 }
 
 export function* userSagas() {
-    yield all(
+    yield all([
         call(onCheckUserSession),
         call(onGoogleSignInStart)
-        )
+    ])
 }

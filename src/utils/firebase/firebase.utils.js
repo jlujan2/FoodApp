@@ -9,7 +9,8 @@ import{
     getFirestore,
     doc,
     getDoc,
-    setDoc
+    setDoc,
+    getDocFromServer
 }from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -24,6 +25,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
+
 googleProvider.setCustomParameters({
     prompt: "select_account"
 });
@@ -33,15 +35,15 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (
-    userAuth, 
-    additionalInformation = {}
-    ) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation) => {
+    console.log(userAuth)
     if(!userAuth) return;
 
     const userDocRef = doc(db, 'users', userAuth.uid);
 
-    const userSnapshot = await getDoc(userDocRef);
+    console.log(userDocRef);
+
+    const userSnapshot = await getDocFromServer(userDocRef);
     
     if(!userSnapshot.exists()) {
         const { email } = userAuth;
