@@ -21,15 +21,16 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navigation() {
   const currentUser = useSelector(selectCurrentUser);
-  console.log(currentUser);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+    console.log(event.value)
   };
 
   const handleCloseNavMenu = () => {
@@ -37,7 +38,9 @@ function Navigation() {
   };
 
   const handleCloseUserMenu = () => {
+    console.log("handleCloseUserMenu")
     setAnchorElUser(null);
+    
   };
 
   return (
@@ -128,14 +131,6 @@ function Navigation() {
                 {page}
               </Button>
             ))}
-          </Box>
-          <Box>
-            {currentUser ? (
-              <h1>User connected</h1>
-            ):
-            <h1>User not Connected</h1>
-            
-            }
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

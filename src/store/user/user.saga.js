@@ -3,18 +3,16 @@ import { takeLatest, all, call, put } from "redux-saga/effects";
 import { USER_ACTION_TYPES } from "./user.types";
  
 import { signInSuccess, 
-    signInFailed } from "./user.action";
+    signInFailed, signOutSucess, signOutFailed } from "./user.action";
 
 import { getCurrentUser, 
     createUserDocumentFromAuth, 
-    signInWithGooglePopup } from "../../utils/firebase/firebase.utils";
+    signInWithGooglePopup, signOutUser } from "../../utils/firebase/firebase.utils";
 
-export function* getSnapshotFromUserAuth(userAuth, addionalDetails) {
+export function* getSnapshotFromUserAuth(userAuth, addionalDetails = {}) {
     try{
         const userSnapshot = yield call(createUserDocumentFromAuth, userAuth, addionalDetails);
-        yield put(signInSuccess({id: userSnapshot.id, ...userSnapshot.data()}))
-        console.log(userSnapshot);
-        console.log(userSnapshot.data());
+        yield put(signInSuccess({id: userSnapshot.id}))
     }catch(error) {
         yield put(signInFailed(error));
     }
@@ -41,6 +39,15 @@ export function* isUserAuthenticated() {
     }
 }
 
+export function* signOut() {
+    try{
+        yield call(signOutUser);
+        yield put(signOutSucess());
+    } catch(error) {
+        yield put(signOutFailed(error))
+    }
+}
+
 export function* onCheckUserSession() {
     yield takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, isUserAuthenticated)
 }
@@ -49,9 +56,14 @@ export function* onGoogleSignInStart() {
     yield takeLatest(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START, signInWithGoogle)
 }
 
+export function* onSignOutStart() {
+    yield takeLatest(USER_ACTION_TYPES.SIGN_OUT_START, signOut)
+}
+
 export function* userSagas() {
     yield all([
         call(onCheckUserSession),
-        call(onGoogleSignInStart)
+        call(onGoogleSignInStart),
+        call(onSignOutStart)
     ])
 }

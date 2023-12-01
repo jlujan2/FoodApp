@@ -4,25 +4,27 @@ import {
     signInWithPopup, 
     GoogleAuthProvider,
     createUserWithEmailAndPassword,
-    onAuthStateChanged} from 'firebase/auth'
+    onAuthStateChanged,
+    signOut
+} from 'firebase/auth'
 import{
     getFirestore,
     doc,
-    getDoc,
     setDoc,
     getDocFromServer
 }from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCg2wcZFIPpE-DBKBytkrBNHC8FvAHjnfk",
-  authDomain: "food-app-e3045.firebaseapp.com",
-  projectId: "food-app-e3045",
-  storageBucket: "food-app-e3045.appspot.com",
-  messagingSenderId: "805930763060",
-  appId: "1:805930763060:web:e35053ebb9282a6bc51b61"
-};
+    apiKey: "AIzaSyDDa02vOGJna962UlLeIe4fo6T-fpwXB5U",
+    authDomain: "foodapp-7fb03.firebaseapp.com",
+    projectId: "foodapp-7fb03",
+    storageBucket: "foodapp-7fb03.appspot.com",
+    messagingSenderId: "209468985379",
+    appId: "1:209468985379:web:3d6c60170fb9bf1680e196"
+  };  
 
-const app = initializeApp(firebaseConfig);
+
+const app = initializeApp(firebaseConfig);// eslint-disable-line no-unused-vars
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -80,4 +82,6 @@ export const getCurrentUser = () => {
         )
     })
 }
+
+export const signOutUser =async () => signOut(auth);
 
